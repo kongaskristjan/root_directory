@@ -16,7 +16,7 @@ def get_root() -> Path:
 def _append_to_path(pth: Path):
     pth = str(pth)
     if pth not in sys.path:
-        sys.path.append(pth)
+        sys.path.insert(1, pth)
 
 _append_to_path(get_root())
 
