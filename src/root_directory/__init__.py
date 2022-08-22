@@ -1,11 +1,12 @@
 
 import sys
 from pathlib import Path
+import __main__
 
 __all__ = ["get_root"]
 
 def get_root() -> Path:
-    file = Path(__file__)
+    file = Path(__main__.__file__)
     for i in range(len(file.parts) - 1):
         directory = file.parents[i]
         if (directory/".git").is_dir() or (directory/".project-root").is_file():
