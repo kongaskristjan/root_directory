@@ -1,5 +1,5 @@
 
-import sys, os, traceback
+import sys, os, inspect
 from pathlib import Path
 
 __all__ = ["get_root"]
@@ -14,13 +14,15 @@ def get_root():
     assert False, "Project root not found. Please add an empty .project-root file to the root or turn it into a git repository."
 
 def _get_inspectable_path():
-    stack = traceback.extract_stack()
-    for frame in reversed(stack):
-        try:
-            return Path(frame.filename).resolve()
-        except OSError:
+    stack = inspect.stack()
+    this_file = stack[0].filename
+    for frame in stack:
+        if frame.filename == this_file:
             continue
-    return os.getcwd()
+        if frame.filename[0] == "<":
+            continue
+        return Path(frame.filename).resolve()
+    return Path(os.getcwd()).resolve()
 
 def _append_to_path(pth):
     pth = str(pth)
@@ -28,8 +30,3 @@ def _append_to_path(pth):
         sys.path.insert(1, pth)
 
 _append_to_path(get_root())
-
-if __name__ == "__main__":
-    from src.root_directory import __init__ # Test if importing works
-    print("Project root: " + str(get_root()))
-    print("Test successful!")
