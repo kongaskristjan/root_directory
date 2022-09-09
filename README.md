@@ -1,6 +1,6 @@
 # root_directory
 
-Tired of the Python ["Importing files from different folder"](https://stackoverflow.com/q/4383571/6865804) mess?
+Tired the Python ["Attempted relative import in non-package"](https://stackoverflow.com/q/11536764/6865804) mess?
 
 This is a no-nonsense utility for importing relative to root. So for a directory structure like that:
 
